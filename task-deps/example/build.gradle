@@ -1,0 +1,34 @@
+// Define tasks
+task taskA << { println "=== task A"}
+task taskB << { println "=== task B"}
+task taskC << { println "=== task C"}
+task taskD << { println "=== task D"}
+task taskE << { println "=== task E"}
+task taskF << { println "=== task F"}
+
+// Task dependencies
+taskA.dependsOn taskB
+taskA.dependsOn taskD, taskC
+
+taskC.dependsOn taskE
+taskD.dependsOn taskE
+
+taskA.dependsOn taskE
+
+task taskG {
+  dependsOn taskE
+  doLast {
+    println "=== task G"
+  }
+}
+
+taskA.dependsOn taskG
+
+taskB.mustRunAfter taskC
+// circular dependency (in a real project, wouldn't be this obvious)
+// taskB.mustRunAfter taskC, taskB
+
+taskB.shouldRunAfter taskD
+
+// whenever taskE is run, must run taskF after
+taskE.finalizedBy taskF

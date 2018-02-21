@@ -1,0 +1,11 @@
+allprojects {
+  apply plugin: 'java'
+}
+
+project(':Repository'){}
+
+project(':Jacket'){
+  dependencies {
+    compile project(':Repository')
+  }
+}
